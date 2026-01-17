@@ -42,23 +42,13 @@
     <script type="text/babel">
         const { useState, useEffect, useCallback } = React;
 
-        // Componente de Icono simplificado para Lucide en HTML directo
-        const Icon = ({ name, className, size = 24 }) => {
-            const [svg, setSvg] = React.useState("");
-            React.useEffect(() => {
-                const iconSvg = lucide.createIcons.icons[name];
-                if (iconSvg) {
-                    setSvg(iconSvg);
-                }
-            }, [name]);
-            return (
-                <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>
-            );
-        };
-
-        // Iconos manuales en SVG para asegurar compatibilidad
+        // Iconos manuales en SVG para asegurar compatibilidad total sin dependencias externas críticas
         const TrophyIcon = () => (
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#ffd700]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        );
+
+        const RotateIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         );
 
         const App = () => {
@@ -79,12 +69,6 @@
                 { id: 'tricera', name: 'Triceratops', points: 300, icon: '🛡️' },
                 { id: 't-rex', name: 'Rey T-Rex', points: 500, icon: '👑' },
             ];
-
-            useEffect(() => {
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }, [gameState, feedback]);
 
             const playSound = (type) => {
                 try {
@@ -215,8 +199,8 @@
                                 </span>
                             ))}
                         </div>
-                        <button onClick={() => location.reload()} className="p-2 bg-[#8b5a2b] rounded-full active:scale-90 border-2 border-[#5c4033]">
-                           <i data-lucide="rotate-ccw" className="w-5 h-5 text-[#f5f5dc]"></i>
+                        <button onClick={() => location.reload()} className="p-2 bg-[#8b5a2b] rounded-full active:scale-90 border-2 border-[#5c4033] flex items-center justify-center text-[#f5f5dc]">
+                           <RotateIcon />
                         </button>
                     </header>
 
@@ -235,7 +219,8 @@
                                         { id: 'multi', label: 'Multiplicar', icon: '🦅', color: 'bg-[#f472b6] border-[#9d174d]' }
                                     ].map(b => (
                                         <button key={b.id} onClick={() => selectMode(b.id)} className={`${b.color} w-full py-6 rounded-[2.5rem] border-b-[10px] flex items-center justify-between px-10 text-white text-3xl font-black active:translate-y-2 active:border-b-4 transition-all shadow-xl`}>
-                                            <span className="text-5xl">{b.icon}</span> {b.label} <i data-lucide="chevron-right"></i>
+                                            <span className="text-5xl">{b.icon}</span> {b.label} 
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                                         </button>
                                     ))}
                                 </div>
